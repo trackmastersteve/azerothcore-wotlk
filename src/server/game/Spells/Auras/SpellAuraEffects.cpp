@@ -2141,23 +2141,12 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
                     uint32 customFormModel = target->ToPlayer()->GetCustomDruidForm(form);
                     if (customFormModel != 0)
                     {
-                        modelid = customFormModel; // Override the native calculation
-
-                        // Look up the scale from your module's config map
-                        float customScale = 1.0f;
-                        auto formIt = DruidFormModels.find(form);
-                        if (formIt != DruidFormModels.end())
-                        {
-                            auto modelIt = formIt->second.find(modelid);
-                            if (modelIt != formIt->second.end())
-                                customScale = modelIt->second;
-                        }
-
-                        target->SetObjectScale(customScale);
+                        modelid = customFormModel; 
+                        target->SetObjectScale(target->ToPlayer()->GetCustomDruidFormScale(form));
                     }
                     else
                     {
-                        target->SetObjectScale(1.0f); // Reset to native scale
+                        target->SetObjectScale(1.0f); // Native scale
                     }
                 }
                 // ---------------------------------
