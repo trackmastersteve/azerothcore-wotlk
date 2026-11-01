@@ -2134,6 +2134,18 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
                         allow = false;
 
             if (allow)
+            {
+                // ------- DRUID-FORMS INJECTION ---
+                if (target->IsPlayer() && target->ToPlayer()->getClass() == CLASS_DRUID)
+                {
+                    uint32 customFormModel = target->ToPlayer()->GetCustomDruidForm(form);
+                    if (customFormModel != 0)
+                    {
+                        modelid = customFormModel; // Override the native calculation
+                    }
+                }
+                // ---------------------------------
+                
                 target->SetDisplayId(modelid);
         }
     }

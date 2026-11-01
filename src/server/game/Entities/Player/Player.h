@@ -2142,6 +2142,25 @@ public:
     void setTeamId(TeamId teamid) { m_team = teamid; };
 
     void InitDisplayIds();
+    
+    // Custom Druid Forms
+    std::map<uint8, uint32> CustomDruidForms;
+    
+    uint32 GetCustomDruidForm(uint8 formId) const
+    {
+        auto itr = CustomDruidForms.find(formId);
+        if (itr != CustomDruidForms.end())
+            return itr->second;
+        return 0; // 0 means default form
+    }
+
+    void SetCustomDruidForm(uint8 formId, uint32 modelId)
+    {
+        if (modelId == 0)
+            CustomDruidForms.erase(formId);
+        else
+            CustomDruidForms[formId] = modelId;
+    }
 
     bool IsAtGroupRewardDistance(WorldObject const* pRewardSource) const;
     bool IsAtLootRewardDistance(WorldObject const* pRewardSource) const;
