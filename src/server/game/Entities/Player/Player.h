@@ -2145,6 +2145,7 @@ public:
     
     // Custom Druid Forms
     std::map<uint8, uint32> CustomDruidForms;
+    std::map<uint8, float> CustomDruidFormScales;
     
     uint32 GetCustomDruidForm(uint8 formId) const
     {
@@ -2160,6 +2161,23 @@ public:
             CustomDruidForms.erase(formId);
         else
             CustomDruidForms[formId] = modelId;
+    }
+
+    float GetCustomDruidFormScale(uint8 formId) const
+    {
+        auto itr = CustomDruidFormScales.find(formId);
+        if (itr != CustomDruidFormScales.end())
+            return itr->second;
+        return 1.0f; // 1.0f means default scale
+    }
+
+    void SetCustomDruidFormScale(uint8 formId, float scale)
+    {
+        // If it's normal size, erase it to save memory. Otherwise, save the scale.
+        if (scale == 1.0f)
+            CustomDruidFormScales.erase(formId);
+        else
+            CustomDruidFormScales[formId] = scale;
     }
 
     bool IsAtGroupRewardDistance(WorldObject const* pRewardSource) const;
