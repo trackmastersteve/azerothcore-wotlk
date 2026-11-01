@@ -2135,13 +2135,29 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
 
             if (allow)
             {
-                // ------- DRUID-FORMS INJECTION ---
+                // ---- MORPH FEATURE INJECTION ----
                 if (target->IsPlayer() && target->ToPlayer()->getClass() == CLASS_DRUID)
                 {
                     uint32 customFormModel = target->ToPlayer()->GetCustomDruidForm(form);
                     if (customFormModel != 0)
                     {
                         modelid = customFormModel; // Override the native calculation
+
+                        // Look up the scale from your module's config map
+                        float customScale = 1.0f;
+                        auto formIt = DruidFormModels.find(form);
+                        if (formIt != DruidFormModels.end())
+                        {
+                            auto modelIt = formIt->second.find(modelid);
+                            if (modelIt != formIt->second.end())
+                                customScale = modelIt->second;
+                        }
+
+                        target->SetObjectScale(customScale);
+                    }
+                    else
+                    {
+                        target->SetObjectScale(1.0f); // Reset to native scale
                     }
                 }
                 // ---------------------------------
