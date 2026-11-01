@@ -2147,6 +2147,7 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
                 // ---------------------------------
                 
                 target->SetDisplayId(modelid);
+            }
         }
     }
     else
