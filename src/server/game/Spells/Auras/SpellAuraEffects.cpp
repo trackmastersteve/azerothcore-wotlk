@@ -2142,11 +2142,6 @@ void AuraEffect::HandleAuraModShapeshift(AuraApplication const* aurApp, uint8 mo
                     if (customFormModel != 0)
                     {
                         modelid = customFormModel; 
-                        target->SetObjectScale(target->ToPlayer()->GetCustomDruidFormScale(form));
-                    }
-                    else
-                    {
-                        target->SetObjectScale(1.0f); // Native scale
                     }
                 }
                 // ---------------------------------
