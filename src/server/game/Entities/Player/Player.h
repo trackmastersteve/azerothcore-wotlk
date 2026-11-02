@@ -1099,6 +1099,19 @@ public:
 
     void SetObjectScale(float scale) override
     {
+        // --- DRUID FORMS INJECTION ---
+        if (getClass() == CLASS_DRUID)
+        {
+            uint8 formId = GetShapeshiftForm();
+            // If they are in a form, and that form has a custom model applied
+            if (formId != 0 && GetCustomDruidForm(formId) != 0)
+            {
+                // Multiply the server's incoming scale by our config scale
+                scale *= GetCustomDruidFormScale(formId);
+            }
+        }
+        // -----------------------------
+
         Unit::SetObjectScale(scale);
         SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, scale * DEFAULT_WORLD_OBJECT_SIZE);
         SetFloatValue(UNIT_FIELD_COMBATREACH, scale * DEFAULT_COMBAT_REACH);
